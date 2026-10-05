@@ -1,0 +1,58 @@
+{
+  "name": "@rapid42/editdock",
+  "version": "0.3.0-alpha.1",
+  "private": false,
+  "type": "module",
+  "license": "MIT",
+  "bin": {
+    "editdock": "./dist/cli/editdock.mjs"
+  },
+  "files": [
+    "dist/cli",
+    "dist/lib",
+    "dist/server",
+    "dist/types",
+    "README.md",
+    "LICENSE",
+    "THIRD-PARTY-NOTICES.md",
+    "CHANGELOG.md",
+    "docs/HANDOFF.md",
+    "docs/AGENT-GOAL.md",
+    "scripts/quickstart.mjs"
+  ],
+  "module": "./dist/lib/editweave.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/lib/editweave.js"
+    },
+    "./render": {
+      "types": "./dist/types/server-render.d.ts",
+      "import": "./dist/server/render.js"
+    }
+  },
+  "scripts": {
+    "build": "vite build -c vite.lib.config.ts && vite build -c vite.render.config.ts && vite build -c vite.cli.config.ts && tsc -p tsconfig.build.json && node scripts/fix-render-types.mjs && node -e \"require('node:fs').chmodSync('dist/cli/editdock.mjs', 0o755)\"",
+    "typecheck": "tsc --noEmit",
+    "test": "node --experimental-strip-types --test tests/core.test.mjs tests/generic-lanes.test.mjs tests/source-audio.test.mjs tests/declarations.test.mjs",
+    "test:installed-cli": "node tests/agent-cli-installed.test.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.4",
+    "typescript": "7.0.2",
+    "vite": "8.3.1"
+  },
+  "publishConfig": {
+    "access": "public",
+    "tag": "next"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NSlothuus/editdock.git"
+  },
+  "bugs": {
+    "url": "https://github.com/NSlothuus/editdock/issues"
+  },
+  "homepage": "https://github.com/NSlothuus/editdock#readme"
+}
